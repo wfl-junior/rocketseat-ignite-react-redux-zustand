@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { Module } from "~/types/Module";
 
 const modules: Module[] = [
@@ -65,11 +65,17 @@ const modules: Module[] = [
 const playerSlice = createSlice({
   name: "player",
   initialState: {
-    course: {
-      modules,
+    course: { modules },
+    currentModuleIndex: 0,
+    currentLessonIndex: 0,
+  },
+  reducers: {
+    play: (state, action: PayloadAction<[number, number]>) => {
+      state.currentModuleIndex = action.payload[0];
+      state.currentLessonIndex = action.payload[1];
     },
   },
-  reducers: {},
 });
 
 export const playerReducer = playerSlice.reducer;
+export const { play } = playerSlice.actions;

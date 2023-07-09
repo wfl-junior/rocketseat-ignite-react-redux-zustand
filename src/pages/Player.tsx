@@ -23,7 +23,7 @@ export function Player({}: PlayerProps): JSX.Element | null {
               {modules.map((module, index) => (
                 <Module
                   key={module.id}
-                  index={index}
+                  moduleIndex={index}
                   title={module.title}
                   amountOfLessons={module.lessons.length}
                 />
