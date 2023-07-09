@@ -24,7 +24,7 @@ export function Module({
       return {
         currentModuleIndex,
         currentLessonIndex,
-        lessons: course.modules[moduleIndex].lessons,
+        lessons: course?.modules[moduleIndex].lessons,
       };
     },
   );
@@ -49,7 +49,7 @@ export function Module({
 
       <Collapsible.Content>
         <nav className="relative flex-col flex gap-4 p-6">
-          {lessons.map((lesson, lessonIndex) => (
+          {lessons?.map((lesson, lessonIndex) => (
             <Lesson
               key={lesson.id}
               title={lesson.title}

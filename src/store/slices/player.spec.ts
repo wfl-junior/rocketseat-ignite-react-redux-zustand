@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { next, play, playerReducer, playerSlice } from "./player";
+import { PlayerState, next, play, playerReducer } from "./player";
 
-const exampleState: ReturnType<typeof playerSlice.getInitialState> = {
+const exampleState: PlayerState = {
   currentModuleIndex: 0,
   currentLessonIndex: 0,
   course: {
+    id: "1",
     modules: [
       {
         id: "1",

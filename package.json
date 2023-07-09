@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "server": "json-server server.json -w -d 500 -p 3333"
+    "server": "json-server server.json -w -d 500 -p 3333",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.0.3",
