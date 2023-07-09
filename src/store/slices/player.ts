@@ -26,7 +26,11 @@ const modules: Module[] = [
         title: "Componente: Sidebar",
         duration: "09:12",
       },
-      { id: "Pj8dPeameYo", title: "CSS Global", duration: "03:23" },
+      {
+        id: "Pj8dPeameYo",
+        title: "CSS Global",
+        duration: "03:23",
+      },
       {
         id: "8KBq2vhwbac",
         title: "Form de comentários",
@@ -62,7 +66,7 @@ const modules: Module[] = [
   },
 ];
 
-const playerSlice = createSlice({
+export const playerSlice = createSlice({
   name: "player",
   initialState: {
     course: { modules },
