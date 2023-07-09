@@ -1,12 +1,11 @@
 import ReactPlayer from "react-player";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "~/store";
+import { useAppDispatch, useAppSelector } from "~/store";
 import { next } from "~/store/slices/player";
 
 interface VideoPlayerProps {}
 
 export function VideoPlayer({}: VideoPlayerProps): JSX.Element | null {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const currentLessonId = useAppSelector(state => {
     const { course, currentModuleIndex, currentLessonIndex } = state.player;
     return course?.modules[currentModuleIndex].lessons[currentLessonIndex].id;

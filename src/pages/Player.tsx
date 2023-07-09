@@ -1,17 +1,14 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Header } from "~/components/Header";
 import { Module } from "~/components/Module";
 import { VideoPlayer } from "~/components/VideoPlayer";
-import { api } from "~/lib/axios";
-import { useAppSelector } from "~/store";
-import { start } from "~/store/slices/player";
-import type { Course } from "~/types/Course";
+import { useAppDispatch, useAppSelector } from "~/store";
+import { loadCourse } from "~/store/slices/player";
 
 interface PlayerProps {}
 
 export function Player({}: PlayerProps): JSX.Element | null {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { modules, currentModuleTitle, currentLessonTitle } = useAppSelector(
     state => {
       const { course, currentModuleIndex, currentLessonIndex } = state.player;
@@ -31,10 +28,7 @@ export function Player({}: PlayerProps): JSX.Element | null {
   }, [currentLessonTitle, currentModuleTitle]);
 
   useEffect(() => {
-    api
-      .get<Course>("/courses/1")
-      .then(response => dispatch(start(response.data)))
-      .catch(console.error);
+    dispatch(loadCourse());
   }, [dispatch]);
 
   return (
