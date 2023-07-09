@@ -1,5 +1,5 @@
 import ReactPlayer from "react-player";
-import { useStore } from "~/zustand-store";
+import { useStore } from "~/store";
 
 interface VideoPlayerProps {}
 
@@ -17,7 +17,7 @@ export function VideoPlayer({}: VideoPlayerProps): JSX.Element | null {
   return (
     <div className="w-full bg-zinc-950 aspect-video">
       <ReactPlayer
-        // playing
+        playing
         controls
         width="100%"
         height="100%"

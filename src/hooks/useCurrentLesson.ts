@@ -1,4 +1,4 @@
-import { useStore } from "~/zustand-store";
+import { useStore } from "~/store";
 
 export function useCurrentLesson() {
   return useStore(store => {

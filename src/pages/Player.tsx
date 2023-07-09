@@ -4,7 +4,7 @@ import { Header } from "~/components/Header";
 import { Module } from "~/components/Module";
 import { VideoPlayer } from "~/components/VideoPlayer";
 import { useCurrentLesson } from "~/hooks/useCurrentLesson";
-import { useStore } from "~/zustand-store";
+import { useStore } from "~/store";
 
 interface PlayerProps {}
 
