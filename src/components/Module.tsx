@@ -17,8 +17,16 @@ export function Module({
   amountOfLessons,
 }: ModuleProps): JSX.Element | null {
   const dispatch = useDispatch();
-  const lessons = useAppSelector(
-    state => state.player.course.modules[moduleIndex].lessons,
+  const { lessons, currentModuleIndex, currentLessonIndex } = useAppSelector(
+    state => {
+      const { course, currentModuleIndex, currentLessonIndex } = state.player;
+
+      return {
+        currentModuleIndex,
+        currentLessonIndex,
+        lessons: course.modules[moduleIndex].lessons,
+      };
+    },
   );
 
   return (
@@ -47,6 +55,10 @@ export function Module({
               title={lesson.title}
               duration={lesson.duration}
               onPlay={() => dispatch(play([moduleIndex, lessonIndex]))}
+              isActive={
+                moduleIndex === currentModuleIndex &&
+                lessonIndex === currentLessonIndex
+              }
             />
           ))}
         </nav>

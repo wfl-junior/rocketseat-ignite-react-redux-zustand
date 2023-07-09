@@ -1,12 +1,12 @@
 import { MessageCircle } from "lucide-react";
-import { CurrentVideoInfo } from "./CurrentVideoInfo";
+import { CurrentLessonInfo } from "./CurrentLessonInfo";
 
 interface HeaderProps {}
 
 export function Header({}: HeaderProps): JSX.Element | null {
   return (
     <header className="flex items-center justify-between">
-      <CurrentVideoInfo />
+      <CurrentLessonInfo />
 
       <button
         type="button"

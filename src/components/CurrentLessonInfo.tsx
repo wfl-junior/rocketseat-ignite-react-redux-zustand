@@ -1,8 +1,8 @@
 import { useAppSelector } from "~/store";
 
-interface CurrentVideoInfoProps {}
+interface CurrentLessonInfoProps {}
 
-export function CurrentVideoInfo({}: CurrentVideoInfoProps): JSX.Element | null {
+export function CurrentLessonInfo({}: CurrentLessonInfoProps): JSX.Element | null {
   const { currentModuleTitle, currentLessonTitle } = useAppSelector(state => {
     const { course, currentModuleIndex, currentLessonIndex } = state.player;
     const currentModule = course.modules[currentModuleIndex];
