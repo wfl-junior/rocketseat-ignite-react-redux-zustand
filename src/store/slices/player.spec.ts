@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { PlayerState, next, play, playerReducer } from "./player";
 
 const exampleState: PlayerState = {
+  isLoading: false,
   currentModuleIndex: 0,
   currentLessonIndex: 0,
   course: {

@@ -1,3 +1,4 @@
+import { Loader } from "lucide-react";
 import { useEffect } from "react";
 import { Header } from "~/components/Header";
 import { Module } from "~/components/Module";
@@ -9,18 +10,19 @@ interface PlayerProps {}
 
 export function Player({}: PlayerProps): JSX.Element | null {
   const dispatch = useAppDispatch();
-  const { modules, currentModuleTitle, currentLessonTitle } = useAppSelector(
-    state => {
-      const { course, currentModuleIndex, currentLessonIndex } = state.player;
+  const { modules, currentModuleTitle, currentLessonTitle, isLoadingCourse } =
+    useAppSelector(state => {
+      const { course, currentModuleIndex, currentLessonIndex, isLoading } =
+        state.player;
 
       return {
+        isLoadingCourse: isLoading,
         modules: state.player.course?.modules,
         currentModuleTitle: course?.modules[currentModuleIndex].title,
         currentLessonTitle:
           course?.modules[currentModuleIndex].lessons[currentLessonIndex].title,
       };
-    },
-  );
+    });
 
   useEffect(() => {
     if (!currentLessonTitle || !currentModuleTitle) return;
@@ -33,7 +35,13 @@ export function Player({}: PlayerProps): JSX.Element | null {
 
   return (
     <div className="text-zinc-50 bg-zinc-950 min-h-screen flex items-center justify-center">
-      {modules ? (
+      {isLoadingCourse ? (
+        <Loader
+          width={32}
+          height={32}
+          className="text-violet-600 animate-spin"
+        />
+      ) : (
         <div className="flex w-[1100px] flex-col gap-6">
           <Header />
 
@@ -44,7 +52,7 @@ export function Player({}: PlayerProps): JSX.Element | null {
 
             <aside className="border-zinc-800 w-80 border-l relative">
               <div className="absolute inset-0 overflow-y-auto scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-700 divide-y-2 divide-zinc-900 flex flex-col">
-                {modules.map((module, index) => (
+                {modules?.map((module, index) => (
                   <Module
                     key={module.id}
                     moduleIndex={index}
@@ -56,7 +64,7 @@ export function Player({}: PlayerProps): JSX.Element | null {
             </aside>
           </main>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
