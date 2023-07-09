@@ -1,19 +1,14 @@
 import ReactPlayer from "react-player";
-import { useAppDispatch, useAppSelector } from "~/store";
-import { next } from "~/store/slices/player";
+import { useStore } from "~/zustand-store";
 
 interface VideoPlayerProps {}
 
 export function VideoPlayer({}: VideoPlayerProps): JSX.Element | null {
-  const dispatch = useAppDispatch();
-  const currentLessonId = useAppSelector(state => {
-    const { course, currentModuleIndex, currentLessonIndex } = state.player;
+  const next = useStore(store => store.next);
+  const currentLessonId = useStore(store => {
+    const { course, currentModuleIndex, currentLessonIndex } = store;
     return course?.modules[currentModuleIndex].lessons[currentLessonIndex].id;
   });
-
-  function handlePlayNext() {
-    dispatch(next());
-  }
 
   if (!currentLessonId) {
     return null;
@@ -26,7 +21,7 @@ export function VideoPlayer({}: VideoPlayerProps): JSX.Element | null {
         controls
         width="100%"
         height="100%"
-        onEnded={handlePlayNext}
+        onEnded={next}
         url={`https://www.youtube.com/watch?v=${currentLessonId}`}
       />
     </div>

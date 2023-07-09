@@ -3,39 +3,31 @@ import { useEffect } from "react";
 import { Header } from "~/components/Header";
 import { Module } from "~/components/Module";
 import { VideoPlayer } from "~/components/VideoPlayer";
-import { useAppDispatch, useAppSelector } from "~/store";
-import { loadCourse } from "~/store/slices/player";
+import { useCurrentLesson } from "~/hooks/useCurrentLesson";
+import { useStore } from "~/zustand-store";
 
 interface PlayerProps {}
 
 export function Player({}: PlayerProps): JSX.Element | null {
-  const dispatch = useAppDispatch();
-  const { modules, currentModuleTitle, currentLessonTitle, isLoadingCourse } =
-    useAppSelector(state => {
-      const { course, currentModuleIndex, currentLessonIndex, isLoading } =
-        state.player;
-
-      return {
-        isLoadingCourse: isLoading,
-        modules: state.player.course?.modules,
-        currentModuleTitle: course?.modules[currentModuleIndex].title,
-        currentLessonTitle:
-          course?.modules[currentModuleIndex].lessons[currentLessonIndex].title,
-      };
-    });
+  const { currentModule, currentLesson } = useCurrentLesson();
+  const { loadCourse, course, isLoading } = useStore(store => ({
+    course: store.course,
+    isLoading: store.isLoading,
+    loadCourse: store.loadCourse,
+  }));
 
   useEffect(() => {
-    if (!currentLessonTitle || !currentModuleTitle) return;
-    document.title = `${currentLessonTitle} - ${currentModuleTitle}`;
-  }, [currentLessonTitle, currentModuleTitle]);
+    loadCourse();
+  }, [loadCourse]);
 
   useEffect(() => {
-    dispatch(loadCourse());
-  }, [dispatch]);
+    if (!currentLesson?.title || !currentModule?.title) return;
+    document.title = `${currentLesson?.title} - ${currentModule.title}`;
+  }, [currentLesson?.title, currentModule?.title]);
 
   return (
     <div className="text-zinc-50 bg-zinc-950 min-h-screen flex items-center justify-center">
-      {isLoadingCourse ? (
+      {isLoading ? (
         <Loader
           width={32}
           height={32}
@@ -52,7 +44,7 @@ export function Player({}: PlayerProps): JSX.Element | null {
 
             <aside className="border-zinc-800 w-80 border-l relative">
               <div className="absolute inset-0 overflow-y-auto scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-700 divide-y-2 divide-zinc-900 flex flex-col">
-                {modules?.map((module, index) => (
+                {course?.modules.map((module, index) => (
                   <Module
                     key={module.id}
                     moduleIndex={index}
